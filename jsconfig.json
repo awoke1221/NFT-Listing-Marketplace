@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
-    "paths": {
-      "componentundeundefinedfined@*(@/*)": ["./src/*"]
+    "baseUrl": "./src",
+    "paths":{
+      "@app/*": ["app/*"],
+      "@components/*": ["components/*"],
+      "@images/*": ["images/*"]
+      
     }
   }
 }
