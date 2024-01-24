@@ -1,6 +1,9 @@
 
+import './navebar.css'
+import ConnectWallet from './ConnectWallet';
+
+
 import Link from 'next/link';
-//import ConnectWallet from './ConnectWallet';
 
 export default function Navbar() {
     return (
@@ -31,13 +34,15 @@ export default function Navbar() {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/about" className='mr-2'>
-                                About
+                            <Link href="/account" className='mr-2'>
+                                Account
                             </Link>
                         </li>
                     </ul>
                 </div>
-                
+                <div>
+                    <ConnectWallet />
+                </div>
                 {/* Hamburger menu for mobile */}
                 {/* Add a responsive menu toggle button here */}
             </nav>

@@ -6,17 +6,19 @@ const navlinks = ['Home', 'Mint', 'Markets'];
 
 export default function Footer() {
     return (
-        <div className='w-full absolute text-white z-10'>
-            <footer className="bg-[#0f0e0e93] grid justify-stretch gap-9 w-full px-4 py-8 md:px-6 md:py-[50px] xl:px-10">
+        <div className='w-full absolute text-black z-10'>
+            <footer className="bg-[#f9f1f1eb] grid justify-stretch gap-9 w-full px-4 py-8 md:px-6 md:py-[50px] xl:px-10">
                 <div className="flex justify-center gap-4">
 
-                    <img src="/images/Logo.png" alt="Logo" className='h-[50px]' />
-                    <Link href='/' className='font-bold text-3xl'> Awo </Link>
+                    <Link href="/" className="flex items-center gap-4">
+                        <img src="/images/Logo.png" alt="Logo" className='h-[60px]' />
+                        <h1 className='font-bold text-3xl'>Awo</h1>
+                    </Link>
                 </div>
 
                 <hr className='w-full' />
 
-                <div className='grid grid-cols-2 justify-items-start md:justify-items-center gap-y-8 md:gap-y-20 md:max-xl:gap-x-20 xl:flex xl:justify-between text-[#F7ECE1] text-[20px] xl:px-[178.5px]'>
+                <div className=' text-black grid grid-cols-2 justify-items-start md:justify-items-center gap-y-8 md:gap-y-20 md:max-xl:gap-x-20 xl:flex xl:justify-between text-[20px] xl:px-[178.5px]'>
                     <div className='flex flex-col'>
                         <b className='pb-4 md:pb-4 font-travel-bold'>App</b>
                         <hr className='w-[60px] pb-6' />
