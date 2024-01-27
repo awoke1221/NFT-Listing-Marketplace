@@ -9,7 +9,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-4">
                     <Link href="/markets" className="flex items-center gap-4">
                         <img src="/images/Logo.png" alt="Logo" className='h-[60px]' />
-                        <h1 className='font-bold text-3xl'>Awo</h1>
+                        <h1 className='font-bold text-3xl'>awo</h1>
                     </Link>
                 </div>
 
