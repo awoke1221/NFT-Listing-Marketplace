@@ -84,7 +84,7 @@ contract MarketPlace is ReentrancyGuard {
         uint256 price = idToMarketToken[_Id].price;
         uint256 tokenId = idToMarketToken[_Id].tokenId;
 
-        require(msg.value == price, " The price must be payed");
+        require(msg.value >= price, " The price must be payed");
         idToMarketToken[_Id].seller.transfer(msg.value);
         IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
         idToMarketToken[_Id].owner = payable(msg.sender);

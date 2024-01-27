@@ -9,8 +9,9 @@ import { nftaddress, nftmarketaddress } from '../../../config'
 import NFT from '../../utils/abi/NFT.json'
 import MarketPlace from '../../utils/abi/MarketPlace.json'
 
-export default function MyNft() {
+export default function Account() {
   const [nfts, setNfts] = useState([])
+  const [sold, setSold] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function MyNft() {
     const tokenContract = new ethers.Contract(nftaddress, NFT.abi, signer)
     const marketPlaceContract = new ethers.Contract(nftmarketaddress, MarketPlace.abi, signer)
    
-    const data = await marketPlaceContract.feachMyNFT()
+    const data = await marketPlaceContract.feachItemsCreated()
 
     const items = await Promise.all(data.map(async i => {
       const tokenUri = await tokenContract.tokenURI(i.tokenId)
@@ -43,6 +44,8 @@ export default function MyNft() {
       }
       return item
     }))
+    const soledItems = items.filter(i => i.sold)
+    setSold(soledItems)
     setNfts(items)
     setLoadingState('loaded')
   }

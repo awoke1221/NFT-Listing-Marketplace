@@ -10,7 +10,7 @@ export default function Footer() {
             <footer className="bg-[#f9f1f1eb] grid justify-stretch gap-9 w-full px-4 py-8 md:px-6 md:py-[50px] xl:px-10">
                 <div className="flex justify-center gap-4">
 
-                    <Link href="/" className="flex items-center gap-4">
+                    <Link href="/markets" className="flex items-center gap-4">
                         <img src="/images/Logo.png" alt="Logo" className='h-[60px]' />
                         <h1 className='font-bold text-3xl'>Awo</h1>
                     </Link>

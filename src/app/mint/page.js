@@ -1,6 +1,5 @@
 'use client'
-import { create } from "@pinata/sdk";
-const fs = require('fs')
+
 import { ethers } from 'ethers'
 import { useState } from 'react'
 import Web3Modal from 'web3modal'
@@ -9,20 +8,35 @@ import NFT from '../../utils/abi/NFT.json'
 import MarketPlace from '../../utils/abi/MarketPlace.json'
 import { useRouter } from "next/navigation";
 require('dotenv').config();
+const axios = require('axios')
+const FormData = require('form-data')
+
 
 
 export default function mintItem() {
     const [fileUrl, setFileUrl] = useState(null)
-    const [formImput, updateFormImput] = useState({price: " ", name: " ", description: " " })
+    const [formImput, updateFormImput] = useState({ price: " ", name: " ", description: " " })
     const router = useRouter()
+
 
     async function onChange(e) {
         const file = e.target.files[0];
         try {
-            const pinata = create(process.env.PINATA_API_KEY, process.env.PINATA_SECRET_API_KEY);
-            const result = await pinata.pinFileToIPFS(file);
-            
-            const url = `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`;
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await axios({
+                method: "post",
+                url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
+                data: formData,
+                headers: {
+                    pinata_api_key: `fda201e251b7718f71d4`,
+                    pinata_secret_api_key: `6cbd0d96e731660143cbc9fcc8ff3d3457471787debacbb5cb885a7daad24400`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            const { IpfsHash } = response.data;
+            const url = `https://gateway.pinata.cloud/ipfs/${IpfsHash}`;
             setFileUrl(url);
         } catch (error) {
             console.log("error uploading a file: ", error);
@@ -32,22 +46,29 @@ export default function mintItem() {
     async function createMarket() {
         const { name, description, price } = formImput
         if (!name || !description || !price || !fileUrl) return
-
-        const data = JSON.stringify(
-            {
-                name, description, Image: fileUrl
-            })
+        // upload to IPFS
+        const data = JSON.stringify({
+            name, description, image: fileUrl
+        })
         try {
-            const pinata = create(process.env.PINATA_API_KEY, process.env.PINATA_SECRET_API_KEY);
-            const result = await pinata.pinJSONToIPFS(JSON.parse(data));
-            const url = `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`;
-            createSale(url)
+            const res = await axios.post("https://api.pinata.cloud/pinning/pinJSONToIPFS", data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    pinata_api_key: `fda201e251b7718f71d4`,
+                    pinata_secret_api_key: `6cbd0d96e731660143cbc9fcc8ff3d3457471787debacbb5cb885a7daad24400`
+
+                }
+            });
+
+            const { IpfsHash } = res.data;
+            const url = `https://gateway.pinata.cloud/ipfs/${IpfsHash}`;
+            createSale(url);
         } catch (error) {
             console.log("error to uplod a file: ", error)
         }
     }
 
-    async function createSale() {
+    async function createSale(url) {
         const web3modal = new Web3Modal()
         const connection = await web3modal.connect()
         const provider = new ethers.providers.Web3Provider(connection)
@@ -56,7 +77,7 @@ export default function mintItem() {
 
         let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
         let transaction = await contract.mintToken(url)
-        let tx = transaction.Wait()
+        let tx = await transaction.wait()
         let event = tx.events[0]
         let value = event.args[2]
         let tokenId = value.toNumber()
@@ -68,7 +89,7 @@ export default function mintItem() {
         listingFee = listingFee.toString()
 
         transaction = await contract.makeMarketItem(nftaddress, tokenId, price, { value: listingFee })
-        transaction.Wait()
+        transaction.wait()
         router.push('/');
     }
 

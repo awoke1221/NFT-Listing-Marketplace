@@ -7,7 +7,7 @@ export default function Navbar() {
         <header className=" bg-[#f9f1f1eb] navbar">
             <nav className=" container flex items-center justify-between mx-auto p-8">
                 <div className="flex items-center gap-4">
-                    <Link href="/" className="flex items-center gap-4">
+                    <Link href="/markets" className="flex items-center gap-4">
                         <img src="/images/Logo.png" alt="Logo" className='h-[60px]' />
                         <h1 className='font-bold text-3xl'>Awo</h1>
                     </Link>
@@ -31,8 +31,8 @@ export default function Navbar() {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/about" className='mr-2'>
-                                About
+                            <Link href="/account" className='mr-2'>
+                                Account
                             </Link>
                         </li>
                     </ul>
