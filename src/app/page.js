@@ -1,3 +1,5 @@
+'use client'
+import connectToMetaMask from "utils/connect";
 
 export default function Home() {
   return (
@@ -13,8 +15,9 @@ export default function Home() {
         </span>
       </div>
       <div>
-        <button className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-8 rounded-full shadow-lg">
-          Get Started
+        <button className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-8 rounded-full shadow-lg"
+        onClick={connectToMetaMask}>
+          Connect MetaMask
         </button>
       </div>
     </div>
