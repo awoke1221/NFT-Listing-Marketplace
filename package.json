@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@coinbase/wallet-sdk": "^4.0.4",
     "@metamask/detect-provider": "^2.0.0",
     "@openzeppelin/contracts": "^5.0.0",
     "axios": "^1.6.5",

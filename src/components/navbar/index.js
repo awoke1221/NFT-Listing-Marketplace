@@ -1,6 +1,6 @@
 
 import Link from 'next/link';
-//import ConnectWallet from './ConnectWallet';
+import ConnectWallet from './ConnectWallet';
 
 export default function Navbar() {
     return (
@@ -36,6 +36,9 @@ export default function Navbar() {
                             </Link>
                         </li>
                     </ul>
+                </div>
+                <div>
+                    <ConnectWallet />
                 </div>
                 
                 {/* Hamburger menu for mobile */}
